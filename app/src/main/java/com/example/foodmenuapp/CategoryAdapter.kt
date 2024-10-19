@@ -8,32 +8,32 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 class CategoryAdapter(
-    context: Context,
+    private val context: Context,
     private val categories: List<String>
 ) : ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, categories) {
 
-    private var selectedPosition = -1 // Track the selected position
+    private var selectedPosition: Int = -1 // Track the selected position
+
+    fun setSelectedPosition(position: Int) {
+        selectedPosition = position
+        notifyDataSetChanged() // Notify the adapter to refresh the list
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getView(position, convertView, parent) as TextView
+        val view = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false)
+        val textView = view.findViewById<TextView>(android.R.id.text1)
 
-        // Set default text color
-        view.setTextColor(android.graphics.Color.BLACK) // Default color is black
-        view.textSize = 16f // Set default text size
+        textView.text = categories[position]
 
-        // Check if the current position is selected
+        // Change text appearance based on selection
         if (position == selectedPosition) {
-            view.setTypeface(view.typeface, android.graphics.Typeface.BOLD) // Make text bold if selected
+            textView.setTextColor(context.getColor(android.R.color.black)) // Dark color
+            textView.textSize = 18f // Increase size or set a bold typeface if preferred
         } else {
-            view.setTypeface(view.typeface, android.graphics.Typeface.NORMAL) // Normal text otherwise
+            textView.setTextColor(context.getColor(android.R.color.darker_gray)) // Default color
+            textView.textSize = 14f // Normal size
         }
 
         return view
-    }
-
-    // Method to update the selected position
-    fun setSelectedPosition(position: Int) {
-        selectedPosition = position
-        notifyDataSetChanged() // Notify the adapter to refresh the view
     }
 }
