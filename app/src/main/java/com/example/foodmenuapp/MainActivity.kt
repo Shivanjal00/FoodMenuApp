@@ -2,7 +2,6 @@ package com.example.foodmenuapp
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -20,13 +19,11 @@ class MainActivity : AppCompatActivity() {
         menuItemsListView = findViewById(R.id.lv_menu_items)
 
         // Set up categories list
-        val categoriesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, categories)
-        categoriesListView.adapter = categoriesAdapter
+        val adapter = CategoryAdapter(this, categories)
+        categoriesListView.adapter = adapter
 
         // Sample JSON data
-        val jsonString = """
-            
-{
+        val jsonString = """{
   "pizza": [
     {
       "id": 0,
@@ -104,11 +101,14 @@ class MainActivity : AppCompatActivity() {
     
   ]
 }
-        """
+""" // Your existing JSON string
 
         val menuData = JsonParser.parseMenuData(jsonString)
 
         categoriesListView.setOnItemClickListener { _, _, position, _ ->
+            // Update selected category position
+            adapter.setSelectedPosition(position)
+
             val selectedCategory = categories[position]
             val items = when (selectedCategory) {
                 "Pizza" -> menuData.pizza

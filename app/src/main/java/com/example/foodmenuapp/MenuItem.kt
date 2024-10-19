@@ -1,5 +1,10 @@
 package com.example.foodmenuapp
 
+data class MenuData(
+    val pizza: List<MenuItem>,
+    val dessert: List<MenuItem>
+)
+
 data class MenuItem(
     val id: Int,
     val name: String,
@@ -7,12 +12,6 @@ data class MenuItem(
     val ingredients: List<String>,
     val spicy: Boolean,
     val vegetarian: Boolean,
-    val price: String,  // Change Float to String
+    val price: String,
     val image: String
-)
-
-
-data class MenuData(
-    val pizza: List<MenuItem>,
-    val dessert: List<MenuItem>
 )
