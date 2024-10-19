@@ -7,9 +7,10 @@ data class MenuItem(
     val ingredients: List<String>,
     val spicy: Boolean,
     val vegetarian: Boolean,
-    val price: Float,
+    val price: String,  // Change Float to String
     val image: String
 )
+
 
 data class MenuData(
     val pizza: List<MenuItem>,
